@@ -244,16 +244,27 @@ end
 
 Ts = 0.4;
 Tf = 30;
-maxsteps=400;%75;
+maxsteps=100;%75;
 simOptions = rlSimulationOptions('MaxSteps',maxsteps);
 experience = sim(env,agent,simOptions);
 %% 
 % _Copyright 2018 The MathWorks, Inc._
 
+data = squeeze(experience.Observation.observations.Data);
+time = experience.Observation.observations.Time;
 
+xs = data(1, :);
+ys = data(2, :);
+thetas = atan2(data(5, :), data(6, :));
 
-
-
+figure
+subplot(3, 1, 1)
+plot(time, xs); hold on; plot(time, zeros(1, length(time)), '--'); grid on; ylabel('X')
+subplot(3, 1, 2)
+plot(time, ys); hold on;  plot(time, zeros(1, length(time)), '--'); grid on; ylabel('Y')
+subplot(3, 1, 3)
+plot(time, thetas*180/pi); hold on;  plot(time, 90*ones(1, length(time)), '--'); grid on; ylabel('Theta')
+xlabel('Time (s)')
 
 
 

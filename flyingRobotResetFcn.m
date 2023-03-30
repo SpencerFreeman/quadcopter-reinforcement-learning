@@ -14,5 +14,5 @@ in = setVariable(in, 'ymax', 30);
 % in = setVariable(in,'y0',y0);
 
 in = setVariable(in,'theta0',-10*pi/180);
-in = setVariable(in,'x0',5);
-in = setVariable(in,'y0',15);
+in = setVariable(in,'x0',-10);
+in = setVariable(in,'y0',-5);

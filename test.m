@@ -20,11 +20,16 @@ rt = r1 + r2 + r3
 rt = rt*maxsteps
 
 
+thw = linspace(-pi,pi,41);
+rwold = (thw - pi/2).^2;
+rw = wrapToPi(thw - pi/2).^2;
 
-
-
-
-
+h = figure;grid on;xlabel('Theta Wrapped');ylabel('Penalty Contribution')
+h.WindowStyle = 'Docked';
+hold on
+plot(thw*180/pi, rwold, 'o-')
+plot(thw*180/pi, rw, '*-')
+legend('old', 'new')
 
 
 
