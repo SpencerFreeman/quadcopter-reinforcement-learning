@@ -9,10 +9,10 @@ y0 = sin(t1)*R;
 in = setVariable(in, 'xmax', 30);
 in = setVariable(in, 'ymax', 30);
 
-% in = setVariable(in,'theta0',t0);
-% in = setVariable(in,'x0',x0);
-% in = setVariable(in,'y0',y0);
+in = setVariable(in,'theta0',t0);
+in = setVariable(in,'x0',x0);
+in = setVariable(in,'y0',y0);
 
-in = setVariable(in,'theta0',-10*pi/180);
-in = setVariable(in,'x0',-10);
-in = setVariable(in,'y0',-5);
+% in = setVariable(in,'theta0',-10*pi/180);
+% in = setVariable(in,'x0',-10);
+% in = setVariable(in,'y0',-5);

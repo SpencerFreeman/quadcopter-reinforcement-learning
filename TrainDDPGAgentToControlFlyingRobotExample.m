@@ -1,4 +1,5 @@
 %% Train DDPG Agent to Control Flying Robot
+clear;clc;close all
 % This example shows how to train a deep deterministic policy gradient (DDPG) 
 % agent to generate trajectories for a flying robot modeled in Simulink®. For 
 % more information on DDPG agents, see  <docid:rl_ug#mw_66c8fe60-f58e-4bdb-904a-21d442f0a879 
@@ -20,11 +21,13 @@ open_system(mdl)
 theta0 = 0;
 x0 = -15;
 y0 = 0;
+ymax = 30;
+xmax = 30;
 %% 
 % Define the sample time |Ts| and the simulation duration |Tf|.
 
 Ts = 0.4;
-Tf = 30;
+Tf = 30*2;
 %% 
 % For this model:
 %% 
@@ -244,7 +247,7 @@ end
 
 Ts = 0.4;
 Tf = 30;
-maxsteps=100;%75;
+maxsteps=200;%75;
 simOptions = rlSimulationOptions('MaxSteps',maxsteps);
 experience = sim(env,agent,simOptions);
 %% 
