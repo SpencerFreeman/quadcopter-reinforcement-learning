@@ -207,6 +207,7 @@ agent = rlDDPGAgent(actor,critic,agentOptions);
 % For more information, see <docid:rl_ref#mw_1f5122fe-cb3a-4c27-8c80-1ce46c013bf0 
 % |rlTrainingOptions|>.
 
+rewardsuccess = 415*2;
 maxepisodes = 20000;
 maxsteps = ceil(Tf/Ts);
 trainingOptions = rlTrainingOptions(...
@@ -216,10 +217,10 @@ trainingOptions = rlTrainingOptions(...
     'Verbose',false,...
     'Plots',"training-progress",...
     'StopTrainingCriteria',"AverageReward",...
-    'StopTrainingValue',415,...
+    'StopTrainingValue',rewardsuccess,...
     'ScoreAveragingWindowLength',10,...
     'SaveAgentCriteria',"EpisodeReward",...
-    'SaveAgentValue',415); 
+    'SaveAgentValue',rewardsuccess); 
 %% 
 % Train the agent using the <docid:rl_ref#mw_c0ccd38c-bbe6-4609-a87d-52ebe4767852 
 % |train|> function. Training is a computationally intensive process that takes 
@@ -247,7 +248,7 @@ end
 
 Ts = 0.4;
 Tf = 30;
-maxsteps=200;%75;
+maxsteps=150;%75;
 simOptions = rlSimulationOptions('MaxSteps',maxsteps);
 experience = sim(env,agent,simOptions);
 %% 
