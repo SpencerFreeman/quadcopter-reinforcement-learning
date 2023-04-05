@@ -21,13 +21,13 @@ open_system(mdl)
 theta0 = 0;
 x0 = -15;
 y0 = 0;
-ymax = 30;
-xmax = 30;
+ymax = 35;
+xmax = 35;
 %% 
 % Define the sample time |Ts| and the simulation duration |Tf|.
 
 Ts = 0.4;
-Tf = 30*2;
+Tf = 40;
 %% 
 % For this model:
 %% 
@@ -207,7 +207,7 @@ agent = rlDDPGAgent(actor,critic,agentOptions);
 % For more information, see <docid:rl_ref#mw_1f5122fe-cb3a-4c27-8c80-1ce46c013bf0 
 % |rlTrainingOptions|>.
 
-rewardsuccess = 415*2;
+rewardsuccess = 700;
 maxepisodes = 20000;
 maxsteps = ceil(Tf/Ts);
 trainingOptions = rlTrainingOptions(...
@@ -247,8 +247,8 @@ end
 % |sim|>.
 
 Ts = 0.4;
-Tf = 30;
-maxsteps=150;%75;
+Tf = 40;
+maxsteps=ceil(Tf/Ts);
 simOptions = rlSimulationOptions('MaxSteps',maxsteps);
 experience = sim(env,agent,simOptions);
 %% 

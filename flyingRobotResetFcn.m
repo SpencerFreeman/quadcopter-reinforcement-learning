@@ -6,13 +6,13 @@ t0 = 2*pi*rand();
 t1 = 2*pi*rand();
 x0 = cos(t1)*R;
 y0 = sin(t1)*R;
-in = setVariable(in, 'xmax', 30);
-in = setVariable(in, 'ymax', 30);
+in = setVariable(in, 'xmax', 35);
+in = setVariable(in, 'ymax', 35);
 
-% in = setVariable(in,'theta0',t0);
-% in = setVariable(in,'x0',x0);
-% in = setVariable(in,'y0',y0);
+in = setVariable(in,'theta0',t0);
+in = setVariable(in,'x0',x0);
+in = setVariable(in,'y0',y0);
 
-in = setVariable(in,'theta0',-45*pi/180);
-in = setVariable(in,'x0',-10);
-in = setVariable(in,'y0',10);
+% in = setVariable(in,'theta0',-30*pi/180);
+% in = setVariable(in,'x0',10);
+% in = setVariable(in,'y0',10);
