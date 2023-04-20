@@ -21,8 +21,8 @@ open_system(mdl)
 theta0 = 0;
 x0 = -15;
 y0 = 0;
-ymax = 35;
-xmax = 35;
+ymax = 60;
+xmax = 60;
 %% 
 % Define the sample time |Ts| and the simulation duration |Tf|.
 
@@ -181,7 +181,7 @@ agentOptions = rlDDPGAgentOptions(...
     'CriticOptimizerOptions',criticOptions,...
     'ExperienceBufferLength',1e6 ,...
     'MiniBatchSize',256);
-agentOptions.NoiseOptions.Variance = 1e-1;
+agentOptions.NoiseOptions.Variance = 2*1e-1;
 agentOptions.NoiseOptions.VarianceDecayRate = 1e-6;
 %% 
 % Then, create the agent using the specified actor representation, critic representation, 
@@ -247,7 +247,7 @@ end
 % |sim|>.
 
 Ts = 0.4;
-Tf = 40;
+Tf = 70;
 maxsteps=ceil(Tf/Ts);
 simOptions = rlSimulationOptions('MaxSteps',maxsteps);
 experience = sim(env,agent,simOptions);

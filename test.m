@@ -33,6 +33,66 @@ plot(thw*180/pi, rw, '*-')
 legend('old', 'new')
 
 
+%%
+clear;clc;close all
+
+A = [0 1; 0 0];
+B = [0; .2]*4;
+C = [1 0];
+D = 0;
+
+% kx = lqr(A, B, 1*eye(2), .01);
+kx = place(A, B, [-.5; -1]*2)
+
+Acl = A - B*kx
+kr = -Acl(2,1)/B(2);
+
+sys = ss(Acl,[0;-Acl(2,1)],C,D);
+
+step(sys)
+
+r = 180*pi/180;
+x = [0; 0];
+u = 0;
+t =  0;
+tend = 10; dt = .01; iend = round(tend/dt);
+for i = 1:iend
+    xs(:, i) = x;
+    us(i) = u;
+    ts(i) = t;
+
+    u = -kx*x + kr*r;
+
+    xdot = A*x + B*u;
+    x = x + xdot*dt;
+    t = t + dt;
+end
+
+h = figure;
+h.WindowStyle = 'Docked';
+plot(ts, xs(1, :)*180/pi)
+grid on
+xlabel('Time (s)')
+ylabel('Angle (deg)')
+
+h = figure;
+h.WindowStyle = 'Docked';
+plot(ts, us(1, :))
+grid on
+xlabel('Time (s)')
+ylabel('Thrust (~)')
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
