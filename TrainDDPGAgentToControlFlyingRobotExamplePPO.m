@@ -15,7 +15,10 @@ Tf = 40;
 
 
 integratedMdl = 'IntegratedFlyingRobot';
-[~,agentBlk,observationInfo,actionInfo] = createIntegratedEnv(mdl,integratedMdl);
+% [~,agentBlk,observationInfo,actionInfo] = createIntegratedEnv(mdl,integratedMdl);
+
+load('obs')
+agentBlk  ='IntegratedFlyingRobot/RL Agent';
 
 numObs = prod(observationInfo.Dimension);
 observationInfo.Name = 'observations';
@@ -69,7 +72,11 @@ commonPath = [
 
 % Define mean value path
 meanPath = [
-    fullyConnectedLayer(15,Name="meanPathIn")
+    fullyConnectedLayer(100,Name="meanPathIn")
+    reluLayer
+    fullyConnectedLayer(100,Name="mean1")
+    reluLayer
+    fullyConnectedLayer(100,Name="mean2")
     reluLayer
     fullyConnectedLayer(prod(actionInfo.Dimension));
     tanhLayer;
@@ -78,7 +85,11 @@ meanPath = [
 
 % Define standard deviation path
 sdevPath = [
-    fullyConnectedLayer(15,"Name","stdPathIn")
+    fullyConnectedLayer(100,"Name","stdPathIn")
+    reluLayer
+    fullyConnectedLayer(100,"Name","std1")
+    reluLayer
+    fullyConnectedLayer(100,"Name","std2")
     reluLayer
     fullyConnectedLayer(prod(actionInfo.Dimension));
     softplusLayer(Name="stdPathOut") 
@@ -94,7 +105,7 @@ actorNetwork = connectLayers(actorNetwork,"comPathOut","meanPathIn/in");
 actorNetwork = connectLayers(actorNetwork,"comPathOut","stdPathIn/in");
 
 % Plot network 
-plot(actorNetwork)
+% plot(actorNetwork)
 
 % Convert to dlnetwork and display number of weights
 actorNetwork = dlnetwork(actorNetwork);
@@ -114,11 +125,22 @@ agentOptions = rlPPOAgentOptions(...
     'ActorOptimizerOptions',actorOptions,...
     'CriticOptimizerOptions',criticOptions,...
     'MiniBatchSize',256);
+% agentOptions = rlPPOAgentOptions(...
+%     ExperienceHorizon=600,...
+%     ClipFactor=0.02,...
+%     EntropyLossWeight=0.01,...
+%     ActorOptimizerOptions=actorOptions,...
+%     CriticOptimizerOptions=criticOptions,...
+%     NumEpoch=3,...
+%     AdvantageEstimateMethod="gae",...
+%     GAEFactor=0.95,...
+%     SampleTime=Ts,...
+%     DiscountFactor=0.997);
 
 agent = rlPPOAgent(actor,critic,agentOptions);
 
-rewardsuccess = 700;
-maxepisodes = 20000;
+rewardsuccess = 0;
+maxepisodes = 5*20000;
 maxsteps = ceil(Tf/Ts);
 trainingOptions = rlTrainingOptions(...
     'MaxEpisodes',maxepisodes,...
@@ -130,7 +152,8 @@ trainingOptions = rlTrainingOptions(...
     'StopTrainingValue',rewardsuccess,...
     'ScoreAveragingWindowLength',10,...
     'SaveAgentCriteria',"EpisodeReward",...
-    'SaveAgentValue',rewardsuccess); 
+    'SaveAgentValue',-500, ...
+    'UseParallel', true); 
 
 %% train
 doTraining = true;
@@ -148,7 +171,8 @@ Ts = 0.4;
 Tf = 70;
 maxsteps=ceil(Tf/Ts);
 simOptions = rlSimulationOptions('MaxSteps',maxsteps);
-experience = sim(env,agent,simOptions);
+% experience = sim(env,agent,simOptions);
+experience = sim(env,saved_agent,simOptions);
 
 %%
 
